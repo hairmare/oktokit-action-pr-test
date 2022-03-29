@@ -54,13 +54,15 @@ jobs:
             console.log("Got reference to parent branch: " + baseRefData.object.sha);
 
             // check if we already have a ref:
-            const { data: refData } = await github.rest.git.getRef({
-              owner,
-              repo,
-              ref: `heads/${branch}`,
-            });
-            console.log(refData)
-            if (!refData) {
+            try {
+              const { data: refData } = await github.rest.git.getRef({
+                owner,
+                repo,
+                ref: `heads/${branch}`,
+              });
+              console.log("Branch already exists: " + refData.object.sha);
+            } catch (error) {
+              console.log(error)
               // create a new reference 
               const { data: newBranchRef } = await github.rest.git.createRef({
                 owner,
@@ -68,7 +70,7 @@ jobs:
                 ref: `refs/heads/${branch}`,
                 sha: baseRefData.object.sha,
               });
-             console.log("Created new branch reference: " + newBranchRef.object.sha);
+              console.log("Created new branch reference: " + newBranchRef.object.sha);
             }
 
             // create a new tree:
