@@ -105,6 +105,7 @@ jobs:
               repo,
               ref: `heads/${branch}`,
               sha: newCommit.sha,
+              force: true,
             });
             console.log("Updated branch reference: " + updatedBranchRef.object.sha);
             console.log(updatedBranchRef)
