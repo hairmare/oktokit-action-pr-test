@@ -53,14 +53,23 @@ jobs:
             });
             console.log("Got reference to parent branch: " + baseRefData.object.sha);
 
-            // create a new reference 
-            //const { data: newBranchRef } = await github.rest.git.createRef({
-            //  owner,
-            //  repo,
-            //  ref: `refs/heads/${branch}`,
-            //  sha: baseRefData.object.sha,
-            //});
-            //console.log("Created new branch reference: " + newBranchRef.object.sha);
+            // check if we already have a ref:
+            const { data: refData } = await github.rest.git.getRef({
+              owner,
+              repo,
+              ref: `heads/${branch}`,
+            });
+            console.log(refData)
+            if (!refData) {
+              // create a new reference 
+              const { data: newBranchRef } = await github.rest.git.createRef({
+                owner,
+                repo,
+                ref: `refs/heads/${branch}`,
+                sha: baseRefData.object.sha,
+              });
+             console.log("Created new branch reference: " + newBranchRef.object.sha);
+            }
 
             // create a new tree:
             const { data: newTree } = await github.rest.git.createTree({
