@@ -122,7 +122,6 @@ jobs:
               console.log("Created new PR: " + newPR.number);
               console.log(newPR)
             } catch (error) {
-              if (!("A pull request already exists for" in error.message)) {
-                throw error
-              }
+              // TODO rethrow if error.message does not contain "A pull request already exists for"
+              console.log(error)
             }
