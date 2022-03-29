@@ -47,6 +47,7 @@ jobs:
               repo,
               ref,
             });
+            console.log("Got reference to parent branch: " + baseRefData.object.sha);
 
             // create a new reference 
             const { data: newBranchRef } = await github.rest.git.createRef({
@@ -55,6 +56,7 @@ jobs:
               ref: `refs/heads/${branch}`,
               sha: baseRefData.object.sha,
             });
+            console.log("Created new branch reference: " + newBranchRef.object.sha);
 
             const { data: commitData } = await github.rest.repos.getCommit({
               owner,
