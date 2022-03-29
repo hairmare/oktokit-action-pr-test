@@ -78,7 +78,7 @@ jobs:
               owner,
               repo,
               message: ":tada: test commit",
-              tree: newTree.object.sha,
+              tree: newTree.sha,
               parents: [baseRefData.object.sha],
             });
             console.log(newCommit)
