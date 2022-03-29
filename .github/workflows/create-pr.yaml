@@ -102,6 +102,7 @@ jobs:
             const { data: newPR } = await github.rest.pulls.create({
               owner,
               repo,
+              title: "🥺",
               head: branch,
               base: "main",
             });
