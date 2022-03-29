@@ -29,11 +29,12 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            owner = "hairmare"
-            repo = "oktoki-action-pr-test"
-            commit = octokit.rest.repos.getCommit({
+            const owner = "hairmare"
+            const repo = "oktokit-action-pr-test"
+            const origin_branch = "main"
+            const { data: commitData } = await github.rest.repos.getCommit({
               owner,
               repo,
-              ref,
+              `heads/${origin_branch}`
             });
-            console.log(commit)
+            console.log(commitData)
