@@ -24,6 +24,7 @@ jobs:
         run: |
           echo '${{ github.event.inputs.content }}' >> content.txt
       - name: generate branch name
+        id: branch-name
         run: |
           echo '::set-output name=branch::${{ github.event.inputs.branch }}'
       - uses: actions/github-script@v6
@@ -32,9 +33,27 @@ jobs:
             const owner = "hairmare"
             const repo = "oktokit-action-pr-test"
             const origin_ref = "heads/main"
+            const branch = "${{ github.branch-name.outputs.branch }}"
+            console.log("Creating branch '" + branch + "' for PR")
+
+            // get reference to parent branch
+            const { data: baseRefData } = await github.rest.git.getRef({
+              owner,
+              repo,
+              ref,
+            });
+
+            // create a new reference 
+            const { data: newBranchRef } = await octokit.git.createRef({
+              owner,
+              repo,
+              ref: `refs/heads/${newBranch}`,
+              sha: baseRefData.object.sha,
+            });
+
             const { data: commitData } = await github.rest.repos.getCommit({
               owner,
               repo,
-              origin_ref,
+              commit_sha: newBranchRef.object.sha,
             });
             console.log(commitData)
