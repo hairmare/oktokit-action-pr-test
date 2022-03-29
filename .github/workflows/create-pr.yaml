@@ -41,7 +41,7 @@ jobs:
             const { data: baseRefData } = await github.rest.git.getRef({
               owner,
               repo,
-              "heads/main"
+              "heads/main",
             });
 
             // create a new reference 
