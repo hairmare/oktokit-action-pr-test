@@ -31,10 +31,10 @@ jobs:
           script: |
             const owner = "hairmare"
             const repo = "oktokit-action-pr-test"
-            const origin_branch = "main"
+            const origin_ref = "heads/main"
             const { data: commitData } = await github.rest.repos.getCommit({
               owner,
               repo,
-              `heads/${origin_branch}`
+              origin_ref,
             });
             console.log(commitData)
