@@ -97,3 +97,13 @@ jobs:
             });
             console.log("Updated branch reference: " + updatedBranchRef.object.sha);
             console.log(updatedBranchRef)
+
+            // create PR :)
+            const { data: newPR } = await github.rest.pulls.create({
+              owner,
+              repo,
+              head: branch,
+              base: "main",
+            });
+            console.log("Created new PR: " + newPR.number);
+            console.log(newPR)
