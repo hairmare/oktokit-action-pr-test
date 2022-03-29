@@ -34,7 +34,6 @@ jobs:
 
             const owner = "hairmare"
             const repo = "oktokit-action-pr-test"
-            const origin_ref = "heads/main"
 
             console.log("Creating branch '" + branch + "' for PR")
 
@@ -42,7 +41,7 @@ jobs:
             const { data: baseRefData } = await github.rest.git.getRef({
               owner,
               repo,
-              origin_ref,
+              "heads/main"
             });
 
             // create a new reference 
