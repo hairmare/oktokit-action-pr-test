@@ -92,7 +92,7 @@ jobs:
             const { data: updatedBranchRef } = await github.rest.git.updateRef({
               owner,
               repo,
-              ref: `refs/heads/${branch}`,
+              ref: `heads/${branch}`,
               sha: newCommit.sha,
             });
             console.log("Updated branch reference: " + updatedBranchRef.object.sha);
