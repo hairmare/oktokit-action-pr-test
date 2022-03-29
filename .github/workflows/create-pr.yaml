@@ -6,14 +6,17 @@ on:
     inputs:
       branch:
         required: true
+        description: The branch to create the PR for
+        type: string
         options: 
         - test
         - test/1
         - test-1
         - test_1
-        - 1234 
+        - "1234"
       content: 
         required: true
+        description: The content of the PR
         default: 'test'
 
 jobs:
@@ -34,6 +37,7 @@ jobs:
 
             const owner = "hairmare"
             const repo = "oktokit-action-pr-test"
+            const ref = "heads/main"
 
             console.log("Creating branch '" + branch + "' for PR")
 
@@ -41,7 +45,7 @@ jobs:
             const { data: baseRefData } = await github.rest.git.getRef({
               owner,
               repo,
-              "heads/main",
+              ref,
             });
 
             // create a new reference 
