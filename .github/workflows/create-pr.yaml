@@ -9,8 +9,12 @@ on:
         description: The branch to create the PR for
         type: choice 
         options: 
-        - test
         - test/1
+        - test/2
+        - test/3
+        - test/4
+        - test/5
+        - test/6
         - test-1
         - test_1
         - "1234"
@@ -88,7 +92,7 @@ jobs:
             const { data: updatedBranchRef } = await github.rest.git.updateRef({
               owner,
               repo,
-              ref: newBranchRef.object.sha,
+              ref: `refs/heads/${branch}`,
               sha: newCommit.sha,
             });
             console.log("Updated branch reference: " + updatedBranchRef.object.sha);
