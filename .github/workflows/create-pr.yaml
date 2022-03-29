@@ -30,21 +30,23 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
+            const branch = "${{ steps.branch-name.outputs.branch }}"
+
             const owner = "hairmare"
             const repo = "oktokit-action-pr-test"
             const origin_ref = "heads/main"
-            const branch = "${{ github.branch-name.outputs.branch }}"
+
             console.log("Creating branch '" + branch + "' for PR")
 
             // get reference to parent branch
             const { data: baseRefData } = await github.rest.git.getRef({
               owner,
               repo,
-              ref,
+              origin_ref,
             });
 
             // create a new reference 
-            const { data: newBranchRef } = await octokit.git.createRef({
+            const { data: newBranchRef } = await github.git.createRef({
               owner,
               repo,
               ref: `refs/heads/${newBranch}`,
