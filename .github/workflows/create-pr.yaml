@@ -49,7 +49,7 @@ jobs:
             });
 
             // create a new reference 
-            const { data: newBranchRef } = await github.git.createRef({
+            const { data: newBranchRef } = await github.rest.git.createRef({
               owner,
               repo,
               ref: `refs/heads/${newBranch}`,
