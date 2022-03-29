@@ -111,12 +111,18 @@ jobs:
             console.log(updatedBranchRef)
 
             // create PR :)
-            const { data: newPR } = await github.rest.pulls.create({
-              owner,
-              repo,
-              title: "🥺",
-              head: branch,
-              base: "main",
-            });
-            console.log("Created new PR: " + newPR.number);
-            console.log(newPR)
+            try {
+              const { data: newPR } = await github.rest.pulls.create({
+                owner,
+                repo,
+                title: "🥺",
+                head: branch,
+                base: "main",
+              });
+              console.log("Created new PR: " + newPR.number);
+              console.log(newPR)
+            } catch (error) {
+              if (!("A pull request already exists for" in error.message)) {
+                throw error
+              }
+            }
