@@ -72,6 +72,7 @@ jobs:
               ],
               base_tree: baseRefData.object.sha,
             });
+            console.log(newTree)
 
             const newCommit = await github.rest.git.createCommit({
               owner,
