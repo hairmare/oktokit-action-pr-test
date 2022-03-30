@@ -140,8 +140,10 @@ jobs:
             }
 
             // request review from originator
-            rest.pulls.requestReviewers({
-              owner,
-              repo,
-              pull_number,
-            });
+            if (newPR) {
+              rest.pulls.requestReviewers({
+                owner,
+                repo,
+                newPR.number,
+              });
+            }
