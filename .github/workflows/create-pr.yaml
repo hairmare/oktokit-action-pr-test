@@ -94,7 +94,8 @@ jobs:
                   path: yamlFileName,
                   mode: "100644",
                   type: "blob",
-                  content: String(yamlData),
+                  // TODO less hacky way to dump roundtripped data (multi-docs, eol)
+                  content: String(yamlData[0])+"\n",
                 },
               ],
               base_tree: baseRefData.object.sha,
