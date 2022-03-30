@@ -135,7 +135,7 @@ jobs:
               const { data: reviewerData } = await github.rest.pulls.requestReviewers({
                 owner,
                 repo,
-                1,
+                1
               });
             } catch (error) {
               // TODO rethrow if error.message does not contain "A pull request already exists for"
