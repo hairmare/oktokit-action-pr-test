@@ -135,7 +135,7 @@ jobs:
               github.rest.pulls.requestReviewers({
                 owner,
                 repo,
-                newPR.number,
+                1,
               });
             } catch (error) {
               // TODO rethrow if error.message does not contain "A pull request already exists for"
