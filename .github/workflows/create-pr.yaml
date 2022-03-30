@@ -27,6 +27,9 @@ jobs:
   prepare:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 14
       - run: npm install yaml
       - name: generate branch name
         id: branch-name
@@ -135,3 +138,10 @@ jobs:
               // TODO rethrow if error.message does not contain "A pull request already exists for"
               console.log(error)
             }
+
+            // request review from originator
+            rest.pulls.requestReviewers({
+              owner,
+              repo,
+              pull_number,
+            });
