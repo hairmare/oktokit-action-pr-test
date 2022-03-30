@@ -51,6 +51,13 @@ jobs:
             const ref = "heads/main"
 
             console.log("Creating branch '" + branch + "' for PR")
+
+            // update YAML
+            const yamlFileName = "./test.yaml"
+            const yamlData = yaml.parse(fs.readFileSync('./test.yaml', 'utf8'))
+            yamlData.value = "${{ github.event.inputs.content }}"
+            fs.writeFileSync(yamlFileName, yaml.stringify(yamlData))
+
             // get reference to parent branch
             const { data: baseRefData } = await github.rest.git.getRef({
               owner,
@@ -134,7 +141,7 @@ jobs:
 
             // request review from originator
             if (newPR) {
-              rest.pulls.requestReviewers({
+              github.rest.pulls.requestReviewers({
                 owner,
                 repo,
                 newPR.number,
