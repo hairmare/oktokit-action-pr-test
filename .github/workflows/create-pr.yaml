@@ -132,7 +132,7 @@ jobs:
               console.log("Created new PR: " + newPR.number);
               console.log(newPR)
 
-              github.rest.pulls.requestReviewers({
+              await github.rest.pulls.requestReviewers({
                 owner,
                 repo,
                 1,
