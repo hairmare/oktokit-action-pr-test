@@ -42,7 +42,7 @@ jobs:
         with:
           script: |
             const fs = require('fs')
-            const yaml = require('yaml')
+            const YAML = require('yaml')
 
             const branch = "${{ steps.branch-name.outputs.branch }}"
             const newValue = "${{ github.event.inputs.content }}"
@@ -55,7 +55,7 @@ jobs:
 
             // update YAML
             const yamlFileName = "./test.yaml"
-            const yamlData = yaml.parse(fs.readFileSync('./test.yaml', 'utf8'))
+            const yamlData = YAML.parse(fs.readFileSync('./test.yaml', 'utf8'))
             console.log(yamlData)
 
             // get reference to parent branch
