@@ -52,8 +52,8 @@ jobs:
             console.log("Creating branch '" + branch + "' for PR")
 
             // update YAML
-            const yamlFileName = "./test.yaml"
-            const yamlData = YAML.load(fs.readFileSync(yamlFileName, 'utf8'))
+            const yamlFileName = "test.yaml"
+            const yamlData = YAML.load(fs.readFileSync(`./${yamlFileName}`, 'utf8'))
             console.log(yamlData)
 
             // get reference to parent branch
@@ -72,7 +72,6 @@ jobs:
               });
               console.log("Branch already exists: " + refData.object.sha);
             } catch (error) {
-              console.log(error)
               // create a new reference 
               const { data: newBranchRef } = await github.rest.git.createRef({
                 owner,
