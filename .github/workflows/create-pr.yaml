@@ -130,13 +130,6 @@ jobs:
                 base: "main",
               });
               console.log("Created new PR: " + newPR.number);
-              console.log(newPR)
-
-              const { data: reviewerData } = await github.rest.pulls.requestReviewers({
-                owner,
-                repo,
-                1
-              });
             } catch (error) {
               // TODO rethrow if error.message does not contain "A pull request already exists for"
               console.log(error)
