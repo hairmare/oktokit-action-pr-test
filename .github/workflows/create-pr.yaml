@@ -31,7 +31,7 @@ jobs:
         with:
           ref: 'main'
       - uses: actions/setup-node@v2
-      - run: npm install yaml@next
+      - run: npm install yaml
       - name: generate branch name
         id: branch-name
         run: |
@@ -53,13 +53,12 @@ jobs:
 
             // update YAML
             const yamlFileName = "test.yaml"
-            const yamlData = YAML.parse(
+            const yamlData = YAML.parseAllDocuments(
               fs.readFileSync(`./${yamlFileName}`, 'utf8'),
               {
-                keepSourceTokens: true,
+                keepCstNodes: true,
               },
             )
-            console.log(yamlData)
 
             // get reference to parent branch
             const { data: baseRefData } = await github.rest.git.getRef({
@@ -95,7 +94,7 @@ jobs:
                   path: yamlFileName,
                   mode: "100644",
                   type: "blob",
-                  content: YAML.stringify(yamlData),
+                  content: String(yamlData),
                 },
               ],
               base_tree: baseRefData.object.sha,
