@@ -27,15 +27,15 @@ jobs:
   prepare:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: 'main'
       - uses: actions/setup-node@v2
       - run: npm install js-yaml
       - name: generate branch name
         id: branch-name
         run: |
           echo '::set-output name=branch::${{ github.event.inputs.branch }}'
-      - uses: actions/checkout@v2
-        with:
-          ref: 'main'
       - uses: actions/github-script@v6
         with:
           script: |
