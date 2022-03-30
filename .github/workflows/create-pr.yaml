@@ -131,15 +131,13 @@ jobs:
               });
               console.log("Created new PR: " + newPR.number);
               console.log(newPR)
-            } catch (error) {
-              // TODO rethrow if error.message does not contain "A pull request already exists for"
-              console.log(error)
-            }
 
-            if (newPR) {
               rest.pulls.requestReviewers({
                 owner,
                 repo,
                 newPR.number,
               });
-            } 
+            } catch (error) {
+              // TODO rethrow if error.message does not contain "A pull request already exists for"
+              console.log(error)
+            }
