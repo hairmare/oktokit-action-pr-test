@@ -28,8 +28,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/setup-node@v2
-        with:
-          node-version: 14
       - run: npm install yaml
       - name: generate branch name
         id: branch-name
