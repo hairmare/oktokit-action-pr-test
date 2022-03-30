@@ -31,7 +31,7 @@ jobs:
         with:
           ref: 'main'
       - uses: actions/setup-node@v2
-      - run: npm install yaml
+      - run: npm install yaml@next
       - name: generate branch name
         id: branch-name
         run: |
@@ -56,7 +56,7 @@ jobs:
             const yamlData = YAML.parse(
               fs.readFileSync(`./${yamlFileName}`, 'utf8'),
               {
-                keepCstNodes: true,
+                keepSourceTokens: true,
               },
             )
             console.log(yamlData)
