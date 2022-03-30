@@ -41,7 +41,12 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
+            const fs = require('fs')
+            const yaml = require('yaml')
+
             const branch = "${{ steps.branch-name.outputs.branch }}"
+            const newValue = "${{ github.event.inputs.content }}"
+
             const owner = "hairmare"
             const repo = "oktokit-action-pr-test"
             const ref = "heads/main"
