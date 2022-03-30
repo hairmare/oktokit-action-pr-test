@@ -38,8 +38,8 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            import fs from 'fs';
-            import yaml from 'yaml';
+            const fs = require('fs');
+            const yaml = require('yaml');
 
             const branch = "${{ steps.branch-name.outputs.branch }}"
 
