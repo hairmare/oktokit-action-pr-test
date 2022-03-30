@@ -41,23 +41,11 @@ jobs:
       - uses: actions/github-script@v6
         with:
           script: |
-            const fs = require('fs');
-            const yaml = require('yaml');
-
             const branch = "${{ steps.branch-name.outputs.branch }}"
-
             const owner = "hairmare"
             const repo = "oktokit-action-pr-test"
             const ref = "heads/main"
-
             console.log("Creating branch '" + branch + "' for PR")
-
-            // update YAML
-            const yamlFileName = "./test.yaml"
-            const yamlData = yaml.parse(fs.readFileSync('./test.yaml', 'utf8'))
-            yamlData.value = "${{ github.event.inputs.content }}"
-            fs.writeFileSync(yamlFileName, yaml.stringify(yamlData))
-
             // get reference to parent branch
             const { data: baseRefData } = await github.rest.git.getRef({
               owner,
@@ -65,7 +53,6 @@ jobs:
               ref,
             });
             console.log("Got reference to parent branch: " + baseRefData.object.sha);
-
             // check if we already have a ref:
             try {
               const { data: refData } = await github.rest.git.getRef({
@@ -85,7 +72,6 @@ jobs:
               });
               console.log("Created new branch reference: " + newBranchRef.object.sha);
             }
-
             // create a new tree:
             const { data: newTree } = await github.rest.git.createTree({
               owner,
@@ -101,7 +87,6 @@ jobs:
               base_tree: baseRefData.object.sha,
             });
             console.log("Created new tree: " + newTree.sha);
-
             const { data: newCommit } = await github.rest.git.createCommit({
               owner,
               repo,
@@ -111,7 +96,6 @@ jobs:
             });
             console.log("Created new commit: " + newCommit.sha);
             console.log(newCommit)
-
             // update branch ref to new commit
             const { data: updatedBranchRef } = await github.rest.git.updateRef({
               owner,
@@ -122,7 +106,6 @@ jobs:
             });
             console.log("Updated branch reference: " + updatedBranchRef.object.sha);
             console.log(updatedBranchRef)
-
             // create PR :)
             try {
               const { data: newPR } = await github.rest.pulls.create({
@@ -137,13 +120,4 @@ jobs:
             } catch (error) {
               // TODO rethrow if error.message does not contain "A pull request already exists for"
               console.log(error)
-            }
-
-            // request review from originator
-            if (newPR) {
-              github.rest.pulls.requestReviewers({
-                owner,
-                repo,
-                newPR.number,
-              });
             }
