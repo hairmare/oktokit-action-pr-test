@@ -135,3 +135,11 @@ jobs:
               // TODO rethrow if error.message does not contain "A pull request already exists for"
               console.log(error)
             }
+
+            if (newPR) {
+              rest.pulls.requestReviewers({
+                owner,
+                repo,
+                newPR.number,
+              });
+            } 
