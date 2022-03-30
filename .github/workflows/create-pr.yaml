@@ -27,16 +27,20 @@ jobs:
   prepare:
     runs-on: ubuntu-latest
     steps:
-      - name: change contents 
-        run: |
-          echo '${{ github.event.inputs.content }}' >> content.txt
+      - run: npm install yaml
       - name: generate branch name
         id: branch-name
         run: |
           echo '::set-output name=branch::${{ github.event.inputs.branch }}'
+      - uses: actions/checkout@v2
+        with:
+          ref: 'main'
       - uses: actions/github-script@v6
         with:
           script: |
+            import fs from 'fs';
+            import yaml from 'yaml';
+
             const branch = "${{ steps.branch-name.outputs.branch }}"
 
             const owner = "hairmare"
@@ -44,6 +48,12 @@ jobs:
             const ref = "heads/main"
 
             console.log("Creating branch '" + branch + "' for PR")
+
+            // update YAML
+            const yamlFileName = "./test.yaml"
+            const yamlData = yaml.parse(fs.readFileSync('./test.yaml', 'utf8'))
+            yamlData.value = "${{ github.event.inputs.content }}"
+            fs.writeFileSync(yamlFileName, yaml.stringify(yamlData))
 
             // get reference to parent branch
             const { data: baseRefData } = await github.rest.git.getRef({
