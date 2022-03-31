@@ -52,7 +52,7 @@ jobs:
             console.log("Creating branch '" + branch + "' for PR")
 
             // update YAML
-            const yamlFileName = "test.yaml"
+            const yamlFileName = "path/test.yaml"
             const yamlData = YAML.parseAllDocuments(
               fs.readFileSync(`./${yamlFileName}`, 'utf8'),
               {
